@@ -6,12 +6,10 @@ def get_sma(symbol, interval, time_period):
     data, metadata = ti.get_sma(symbol=symbol, interval=interval, time_period=time_period, series_type='close')
     return data, metadata
 
-def plot(sma7, sma21, sma3):
-    plt.plot(sma7)
-    plt.plot(sma21)
-    plt.plot(sma3)
+def plot(sma7, sma21):
+    plt.plot(sma7, color='b')
+    plt.plot(sma21, color='r')
     plt.show()
-sma1, smax = get_sma('MSFT', 'daily', 7)
+sma1, smax = get_sma('MSFT', 'weekly', 7)
 sma2, smay = get_sma('MSFT', 'weekly', 21)
-sma3, x = get_sma('MSFT', 'monthly', 21)
-plot(sma1, sma2, sma3)
+plot(sma1, sma2)
