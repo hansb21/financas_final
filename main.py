@@ -16,3 +16,12 @@ if acao not in acoes_Validas:
 
 
 plot(acao)
+"""
+comprar, vender = analiseMedia(acao)
+if comprar == True:
+   print('Compre')
+elif vender == True:
+   print('Venda')
+else:
+   print('Não faça nada, é incerto.')
+"""
