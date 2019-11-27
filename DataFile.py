@@ -35,7 +35,8 @@ class DataFile:
 		t.close()
 		if temp == '':
 			now = datetime.datetime.now()
-			sucess = self.requestData()
+			self.requestData()
+			self.__timeStamp = now
 
 			t = open(timeFileName,'w')
 			t.write(str(now))
@@ -44,19 +45,17 @@ class DataFile:
 			self.__timeStamp = datetime.strptime(temp,'%Y-%m-%d %H:%M:%S.%f')
 
 	def requestData(self):
-		fileName = self.__name + ".json"
+		fileName = self.__name + "_data.json"
 		try:
-			self.__data,garb = self.__ts.get_daily(self.__tag)
-			print("REQUESTED DATA FROM ALPHAVANTAGE")
-			t.open(fileName,'w+')
-			print("OPENED FILE")
-			t.write(self.__data)
-			print("WRITTEN ON FILE")
-			t.close()
-			print("CLOSED FILE")
-			return True
+			f = open(fileName,'x')
 		except:
-			return False
+			pass
+		try:
+			self.__data,garbage = self.__ts.get_daily(self.__tag)
+			with open(fileName, 'w') as outfile:
+				json.dump(self.__data, outfile)
+		except:
+			print("ERROR: COULD NOT REQUEST DATA FROM ALPHAVANTAGE")
 
 
 def timeCheck(timestamp,deltaMax):
@@ -73,4 +72,5 @@ def deltaMin(minute):
 def deltaDay(day):
 	return datetime.timedelta(days = day)
 
-a = DataFile('BTC','BTC')
+n,t = input("Insira <nome do stonks> <tag do stonks na API do ALPHAVANTAGE>\n").split()
+a = DataFile(name = n,tag = t)
