@@ -2,9 +2,14 @@ from functions import *
 
 acoes_Validas = ['MSFT', 'GOGL', 'AMZN', 'TSLA']
 
+option = int(input('Entre ação: '))
+for i in range(0, 4):
+    if i == option:
+        acao = acoes_Validas[i]
+
 #TODO
 # Adicionar uma interface com 4 botões para selecionar as ações validas
-acao = 'AMZN'
+
 
 if acao not in acoes_Validas:
     print('Essa ação não é valida. ') #A principio é só pra testes
