@@ -16,8 +16,8 @@ def get_sma(symbol):
     #Gera uma key aleatoria cada vez
     ti = TechIndicators(key=str(randint(99994, 447389428)), output_format='pandas')
     
-    data7, metadata = ti.get_sma(symbol=symbol, interval='60min', time_period=7, series_type='close')
-    data21, metadata = ti.get_sma(symbol=symbol, interval='60min', time_period=21, series_type='close')
+    data7, metadata = ti.get_sma(symbol=symbol, interval='daily', time_period=7, series_type='close')
+    data21, metadata = ti.get_sma(symbol=symbol, interval='daily', time_period=21, series_type='close')
     
     return data7, data21
 
@@ -33,7 +33,7 @@ def plot(acao, nome):
     
     eixo.axhline(y=ultimo, xmin=0.0, xmax=1.0, color=cor, label=opcao)
 
-    eixo.set(xlabel='Tempo', ylabel='Preço', title="{} Stocks 60min".format(nome))
+    eixo.set(xlabel='Tempo', ylabel='Preço', title="{} Stocks daily".format(nome))
     
     #Arruma a data
     eixo.xaxis_date()
