@@ -11,7 +11,7 @@ class DataFile:
 		self.__sma7 = ''
 		self.__sma21 = ''
 		self.__ti = TechIndicators('IIB8DA6B2CRR6UL7')
-		garb = self.updateData()
+		self.updateData()
 
 	def getName(self):
 		return self.__name
@@ -102,4 +102,15 @@ def exportDataPlot(data,category):
 		exportY.append(float(value[category]))
 	for key in data:
 		exportX.append(key)
+	return exportX, exportY
+
+def exportLastDataPlot(data,category):
+	exportY = []
+	exportX = []
+	for value in data.values():
+		exportY.append(float(value[category]))
+		break
+	for key in data:
+		exportX.append(key)
+		break
 	return exportX, exportY
