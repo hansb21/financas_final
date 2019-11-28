@@ -81,7 +81,7 @@ class DataFile:
 
 
 	def __requestAlphaVantage(self,period):
-		data,garbage = self.__ti.get_sma(symbol=self.__tag, interval='60min', time_period=period, series_type='close')
+		data,garbage = self.__ti.get_sma(symbol=self.__tag, interval='daily', time_period=period, series_type='close')
 		return data
 
 def timeCheck(timestamp,deltaMin):
