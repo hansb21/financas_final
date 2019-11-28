@@ -26,6 +26,7 @@ class DataFile:
 
 	def updateData(self):
 		timeFileName = self.__name + "_time.txt"
+		fileName = self.__name + "_data.json"
 		try:
 			t = open(timeFileName,'x')
 		except:
@@ -34,17 +35,22 @@ class DataFile:
 		temp = t.read()
 		t.close()
 		if temp == '':
-			now = datetime.datetime.now()
-			self.requestData()
-			self.__timeStamp = now
-
-			t = open(timeFileName,'w')
-			t.write(str(now))
-			t.close()
+			self.__requestData()
 		else:
-			self.__timeStamp = datetime.strptime(temp,'%Y-%m-%d %H:%M:%S.%f')
+			self.__timestamp = datetime.datetime.strptime(temp,'%Y-%m-%d %H:%M:%S.%f')
+			if timeCheck(self.__timestamp,deltaDay(1)):
+				self.__requestData()
+			else:
+				with open(fileName) as json_file:
+					self.__data = json.load(json_file)
 
-	def requestData(self):
+	def __updateTime(self,time):
+		timeFileName = self.__name + "_time.txt"
+		t = open(timeFileName,'w')
+		t.write(str(time))
+		t.close()
+
+	def __requestData(self):
 		fileName = self.__name + "_data.json"
 		try:
 			f = open(fileName,'x')
@@ -54,14 +60,17 @@ class DataFile:
 			self.__data,garbage = self.__ts.get_daily(self.__tag)
 			with open(fileName, 'w') as outfile:
 				json.dump(self.__data, outfile)
+			now = datetime.datetime.now()
+			self.__timestamp = now
+			self.__updateTime(now)
 		except:
 			print("ERROR: COULD NOT REQUEST DATA FROM ALPHAVANTAGE")
 
 
-def timeCheck(timestamp,deltaMax):
+def timeCheck(timestamp,deltaMin):
 	now = datetime.datetime.now()
 	deltaTime = now-timestamp
-	if deltaTime<deltaMax:
+	if deltaTime>deltaMin:
 		return True
 	else:
 		return False
