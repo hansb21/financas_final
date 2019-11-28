@@ -52,9 +52,9 @@ def analiseMedia(acao):
 `       `
         sma7, sma21 = get_sma(acao)
         ultimo = len(sma7['SMA'].keys())
-        if sma7.last(offset='60min') > sma21.last(offset='60min'):
+        if sma7.last(offset='60min') < sma21.last(offset='60min'):
                 Comprar = True
-        elif sma7.last(offset='60min') < sma21.last(offset='60min'):
+        elif sma7.last(offset='60min') > sma21.last(offset='60min'):
                 Vender = True
         else:
                 pass
