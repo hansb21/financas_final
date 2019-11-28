@@ -22,8 +22,6 @@ def get_sma(symbol):
 
 
 def plot(acao):
-    #color = 'r' if (sma7 < 0).all() else 'g'
-    
     figura, eixo = plt.subplots()
     plt.subplots_adjust(bottom=0.2)
 
@@ -31,6 +29,9 @@ def plot(acao):
     
     eixo.plot(sma7, color='g', alpha=0.75, label='Média Móvel - 7')
     eixo.plot(sma21, color='r', alpha=0.75, label='Média Móvel - 21')
+    
+#     eixo.axhline(y=140, xmin=0.0, xmax=1.0, color='r')
+
     eixo.set(xlabel='Tempo', ylabel='Preço', title="{} Stocks 60min".format(acao))
     
     #Arruma a data
@@ -48,9 +49,9 @@ def plot(acao):
 def analiseMedia(acao):
         Comprar = False
         Vender = False
-
+`       `
         sma7, sma21 = get_sma(acao)
-        ultimo = len(sma7) - 1
+        ultimo = len(sma7['SMA'].keys())
         if sma7.last(offset='60min') > sma21.last(offset='60min'):
                 Comprar = True
         elif sma7.last(offset='60min') < sma21.last(offset='60min'):
