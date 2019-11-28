@@ -22,8 +22,11 @@ class DataFile:
 	def getTimestamp(self):
 		return self.__timestamp
 
-	def getData(self):
-		return self.__data
+	def getData(self,period):
+		if period == 7:
+			return self.__sma7
+		else:
+			return self.__sma21
 
 	def updateData(self):
 		timeFileName = self.__name + "_time.txt"
