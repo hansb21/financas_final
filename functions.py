@@ -6,6 +6,7 @@ import matplotlib.dates as mdates
 from random import randint
 
 from datetime import date
+from DataFile import *
 
 from pandas.plotting import register_matplotlib_converters
 
@@ -21,16 +22,16 @@ def get_sma(symbol):
     return data7, data21
 
 
-def plot(acao):
+def plot(acao, nome):
     figura, eixo = plt.subplots()
     plt.subplots_adjust(bottom=0.2)
 
     sma7, sma21 = get_sma(acao)
-    
+    opcao, cor, ultimo = analiseMedia(acao, nome)
     eixo.plot(sma7, color='g', alpha=0.75, label='Média Móvel - 7')
     eixo.plot(sma21, color='r', alpha=0.75, label='Média Móvel - 21')
     
-#     eixo.axhline(y=140, xmin=0.0, xmax=1.0, color='r')
+    eixo.axhline(y=ultimo, xmin=0.0, xmax=1.0, color=cor, label=opcao)
 
     eixo.set(xlabel='Tempo', ylabel='Preço', title="{} Stocks 60min".format(acao))
     
@@ -45,20 +46,23 @@ def plot(acao):
     plt.legend()
     
     plt.show()
-"""
-def analiseMedia(acao):
-        Comprar = False
-        Vender = False
-`       `
-        sma7, sma21 = get_sma(acao)
-        ultimo = len(sma7['SMA'].keys())
-        if sma7.last(offset='60min') < sma21.last(offset='60min'):
-                Comprar = True
-        elif sma7.last(offset='60min') > sma21.last(offset='60min'):
-                Vender = True
+
+def analiseMedia(acao, nome):
+        Opcao = ''
+        Cor = ''
+        dG = DataFile('nome','acao')
+        sma7 = dG.getData(7)
+        sma21 = dG.getData(21)
+        label, sma7 = exportLastDataPlot(sma7,'SMA')
+        label, sma21 = exportLastDataPlot(sma21, 'SMA')
+        if sma7[-1] < sma21[-1]:
+                opcao = 'Comprar'
+                cor = 'green'
+        elif sma7[-1] > sma21[-1]:
+                opcao = 'Vender'
+                cor = 'red'
         else:
-                pass
-        return Comprar, Vender
+                opcao = 'Incerteza, não faça nada'
+                cor = 'grey'
+        return opcao, cor, sma21[-1]
         
-        Só uma ideia ainda que preciso pensar, talvez trocar o pandas por json.
-        """

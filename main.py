@@ -15,7 +15,7 @@ if acao not in acoes_Validas:
     print('Essa ação não é valida. ') #A principio é só pra testes
 
 
-plot(acao)
+plot(acao, 'GOOGLE')
 """
 comprar, vender = analiseMedia(acao)
 if comprar == True:
