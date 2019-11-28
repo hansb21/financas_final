@@ -28,12 +28,12 @@ def plot(acao, nome):
 
     sma7, sma21 = get_sma(acao)
     opcao, cor, ultimo = analiseMedia(acao, nome)
-    eixo.plot(sma7, color='g', alpha=0.75, label='Média Móvel - 7')
-    eixo.plot(sma21, color='r', alpha=0.75, label='Média Móvel - 21')
+    eixo.plot(sma7, color='#9a5cad', alpha=0.75, label='Média Móvel - 7')
+    eixo.plot(sma21, color='#00FFFF', alpha=0.75, label='Média Móvel - 21')
     
     eixo.axhline(y=ultimo, xmin=0.0, xmax=1.0, color=cor, label=opcao)
 
-    eixo.set(xlabel='Tempo', ylabel='Preço', title="{} Stocks 60min".format(acao))
+    eixo.set(xlabel='Tempo', ylabel='Preço', title="{} Stocks 60min".format(nome))
     
     #Arruma a data
     eixo.xaxis_date()
@@ -50,7 +50,7 @@ def plot(acao, nome):
 def analiseMedia(acao, nome):
         Opcao = ''
         Cor = ''
-        dG = DataFile('nome','acao')
+        dG = DataFile(nome, acao)
         sma7 = dG.getData(7)
         sma21 = dG.getData(21)
         label, sma7 = exportLastDataPlot(sma7,'SMA')
