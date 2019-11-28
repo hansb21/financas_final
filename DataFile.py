@@ -95,5 +95,11 @@ def timeCheck(timestamp,deltaMin):
 def deltaMin(minute):
 	return datetime.timedelta(minutes = minute)
 
-n,t = input("Insira <nome do stonks> <tag do stonks na API do ALPHAVANTAGE>\n").split()
-a = DataFile(name = n,tag = t)
+def exportDataPlot(data,category):
+	exportY = []
+	exportX = []
+	for value in data.values():
+		exportY.append(float(value[category]))
+	for key in data:
+		exportX.append(key)
+	return exportX, exportY
